@@ -3,7 +3,7 @@ import {Button, Modal} from 'react-bootstrap';
 
 interface Props extends React.PropsWithChildren {
   show: boolean;
-  title?:string;
+  title?: string;
   onClose: VoidFunction;
 }
 
@@ -20,8 +20,8 @@ const AppModal: React.FC<Props> = ({
       size="lg"
       centered
     >
-      <Modal.Header closeButton >
-      <h3>{title}</h3>
+      <Modal.Header closeButton>
+        <h3>{title}</h3>
       </Modal.Header>
       <Modal.Body>
         {children}

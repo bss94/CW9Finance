@@ -106,7 +106,6 @@ const FormTransaction: React.FC<Props> = ({
         </Col>
       </Form.Group>
 
-
       <Form.Group as={'div'} className="mb-3 row" controlId="amount">
         <Col sm={4}>
           <Form.Label>Amount:</Form.Label>
@@ -124,13 +123,19 @@ const FormTransaction: React.FC<Props> = ({
       </Form.Group>
 
 
-      <SpinnerBtn type="submit"
-                  variant="warning"
-                  isSending={sending}
-                  className="text-white"
-      >
-        Save
-      </SpinnerBtn>
+      <Form.Group as={'div'} className="mt-5 row">
+        <Col/>
+        <Col sm={2} className="mt-2 text-end">
+          <SpinnerBtn type="submit"
+                      variant="warning"
+                      isSending={sending}
+                      className="text-white"
+
+          >
+            Save
+          </SpinnerBtn>
+        </Col>
+      </Form.Group>
     </Form>
   );
 };

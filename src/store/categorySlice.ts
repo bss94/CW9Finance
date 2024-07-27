@@ -59,7 +59,6 @@ const categorySlice = createSlice({
       })
       .addCase(createCategory.fulfilled, (state) => {
         state.creatingCategory = false;
-
       })
       .addCase(createCategory.rejected, (state) => {
         state.creatingCategory = false;
@@ -69,7 +68,6 @@ const categorySlice = createSlice({
       })
       .addCase(deleteCategory.fulfilled, (state) => {
         state.deletingCategory = false;
-
       })
       .addCase(deleteCategory.rejected, (state) => {
         state.deletingCategory = false;
@@ -80,7 +78,6 @@ const categorySlice = createSlice({
       .addCase(updateCategory.fulfilled, (state) => {
         state.updatingCategory = false;
         state.editCategoryId = null;
-
       })
       .addCase(updateCategory.rejected, (state) => {
         state.updatingCategory = false;

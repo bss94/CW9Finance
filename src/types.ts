@@ -1,38 +1,31 @@
-
-export interface Category{
-  id:string;
-  title:string;
-  type:string;
+export interface Category {
+  id: string;
+  title: string;
+  type: string;
 }
 
 export type ApiCategory = Omit<Category, 'id'>;
 
-export interface ApiCategories{
-  [id:string]: ApiCategory;
+export interface ApiCategories {
+  [id: string]: ApiCategory;
 }
 
-export interface Transaction{
-  id:string;
-  category:string;
-  amount:number;
-  createdAt:string;
+export interface Transaction {
+  id: string;
+  category: string;
+  amount: number;
+  createdAt: string;
 }
+
 export type ApiTransaction = Omit<Transaction, 'id'>;
 
-export interface ApiTransactions{
-  [id:string]: ApiTransaction;
+export interface ApiTransactions {
+  [id: string]: ApiTransaction;
 }
 
-export interface AppTransaction{
-  id:string;
-  category:Category;
-  amount:number;
-  createdAt:string;
-}
-
-export interface TransactionMutation{
-  category:string;
-  type:string;
-  amount:string;
-  createdAt:string;
+export interface TransactionMutation {
+  category: string;
+  type: string;
+  amount: string;
+  createdAt: string;
 }

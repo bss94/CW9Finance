@@ -7,13 +7,13 @@ const TransactionList = () => {
   const transactions = useAppSelector(selectTransactions);
 
   let sortedTransactions = [...transactions];
-  if(transactions.length>0){
+  if (transactions.length > 0) {
     sortedTransactions = sortedTransactions.sort((first, second) => -first.createdAt.localeCompare(second.createdAt));
   }
   return (
     <>
-      {sortedTransactions.map(item=>{
-        return <TransactionsItem transaction={item} key={item.id}/>
+      {sortedTransactions.map(item => {
+        return <TransactionsItem transaction={item} key={item.id}/>;
       })}
     </>
   );

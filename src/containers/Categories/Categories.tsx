@@ -14,6 +14,7 @@ import {createCategory, fetchCategories, updateCategory} from '../../store/categ
 import {toast} from 'react-toastify';
 import {useEffect} from 'react';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import {fetchTransactions} from '../../store/transactionsThunk';
 
 const Categories = () => {
   const dispatch = useAppDispatch();
@@ -24,11 +25,10 @@ const Categories = () => {
   const updating = useAppSelector(selectUpdatingCategory);
   const editId = useAppSelector(selectEditId);
 
-
   useEffect(() => {
     dispatch(fetchCategories());
+    dispatch(fetchTransactions());
   }, [dispatch]);
-
 
   const showAddModal = () => {
     dispatch(openAddModal());
@@ -66,7 +66,6 @@ const Categories = () => {
       }
     }
   };
-
 
   return (
     <>

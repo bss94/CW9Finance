@@ -6,8 +6,8 @@ const CategoryList = () => {
   const category = useAppSelector(selectCategory);
   return (
     <>
-      {category.map(item=>{
-        return <CategoryItem key={item.id} category={item}/>
+      {category.map(item => {
+        return <CategoryItem key={item.id} category={item}/>;
       })}
     </>
   );

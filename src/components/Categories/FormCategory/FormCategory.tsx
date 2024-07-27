@@ -76,15 +76,19 @@ const FormCategory: React.FC<Props> = ({
           </Form.Select>
         </Col>
       </Form.Group>
+      <Form.Group as={'div'} className="mt-5 row">
+        <Col/>
+        <Col sm={2} className="mt-2 text-end">
+          <SpinnerBtn type="submit"
+                      variant="warning"
+                      isSending={sending}
+                      className="text-white"
 
-      <SpinnerBtn type="submit"
-                  variant="warning"
-                  isSending={sending}
-                  className="text-white"
-
-      >
-        Save
-      </SpinnerBtn>
+          >
+            Save
+          </SpinnerBtn>
+        </Col>
+      </Form.Group>
     </Form>
   );
 };

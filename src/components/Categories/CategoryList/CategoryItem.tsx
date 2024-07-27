@@ -6,6 +6,8 @@ import {openEditModal, selectDeletingCategory} from '../../../store/categorySlic
 import {deleteCategory, fetchCategories} from '../../../store/categoryThunk';
 import SpinnerBtn from '../../SpinnerBtn/SpinnerBtn';
 import {toast} from 'react-toastify';
+import {selectTransactions} from '../../../store/transactionSlice';
+import {deleteTransaction} from '../../../store/transactionsThunk';
 
 interface Props {
   category: Category;
@@ -14,15 +16,24 @@ interface Props {
 const CategoryItem: React.FC<Props> = ({category}) => {
   const dispatch = useAppDispatch();
   const deleting = useAppSelector(selectDeletingCategory);
+  const transactions = useAppSelector(selectTransactions);
 
   const removeCategory = async (id: string) => {
-    try {
-      await dispatch(deleteCategory(id));
-      toast.success('category deleted');
-    } catch (error) {
-      toast.error('Could not delete category!');
-    } finally {
-      await dispatch(fetchCategories());
+    const answer = confirm('Are you sure you want to delete this category?\nThis action may delete all transaction of this category!');
+    if (answer) {
+      try {
+        await dispatch(deleteCategory(id));
+        transactions.forEach(item => {
+          if (item.category === id) {
+            dispatch(deleteTransaction(item.id));
+          }
+        });
+        toast.success('category deleted');
+      } catch (error) {
+        toast.error('Could not delete category!');
+      } finally {
+        await dispatch(fetchCategories());
+      }
     }
   };
   const showEditModal = (id: string) => {
