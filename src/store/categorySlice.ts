@@ -4,7 +4,7 @@ import {createCategory, deleteCategory, fetchCategories, updateCategory} from '.
 
 export interface CategoryState {
   categories: Category[];
-  fetchCategories:boolean;
+  fetchCategories: boolean;
   addModalShow: boolean;
   editModalShow: boolean;
   editCategoryId: null | string;
@@ -15,13 +15,13 @@ export interface CategoryState {
 
 const initialState: CategoryState = {
   categories: [],
-  fetchCategories:false,
+  fetchCategories: false,
   addModalShow: false,
   editModalShow: false,
   editCategoryId: null,
   deletingCategory: false,
   creatingCategory: false,
-  updatingCategory:false,
+  updatingCategory: false,
 };
 
 const categorySlice = createSlice({
@@ -34,7 +34,7 @@ const categorySlice = createSlice({
     closeAddModal: (state) => {
       state.addModalShow = false;
     },
-    openEditModal: (state,{payload:categoryId}:PayloadAction<string>) => {
+    openEditModal: (state, {payload: categoryId}: PayloadAction<string>) => {
       state.editModalShow = true;
       state.editCategoryId = categoryId;
     },
@@ -44,13 +44,13 @@ const categorySlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchCategories.pending,(state) => {
+    builder.addCase(fetchCategories.pending, (state) => {
       state.fetchCategories = true;
     })
-      .addCase(fetchCategories.rejected,(state) => {
+      .addCase(fetchCategories.rejected, (state) => {
         state.fetchCategories = false;
       })
-      .addCase(fetchCategories.fulfilled,(state,{payload:categories}:PayloadAction<Category[]>) => {
+      .addCase(fetchCategories.fulfilled, (state, {payload: categories}: PayloadAction<Category[]>) => {
         state.fetchCategories = false;
         state.categories = categories;
       })
@@ -64,8 +64,8 @@ const categorySlice = createSlice({
       .addCase(createCategory.rejected, (state) => {
         state.creatingCategory = false;
       })
-      .addCase(deleteCategory.pending, (state, {meta: {arg: dishId}}) => {
-        state.deletingCategory = dishId;
+      .addCase(deleteCategory.pending, (state, {meta: {arg: id}}) => {
+        state.deletingCategory = id;
       })
       .addCase(deleteCategory.fulfilled, (state) => {
         state.deletingCategory = false;
@@ -89,12 +89,12 @@ const categorySlice = createSlice({
   selectors: {
     selectCategory: (state) => state.categories,
     selectFetchCategories: (state) => state.fetchCategories,
-    selectAddShow:(state)=>state.addModalShow,
-    selectEditShow:(state)=>state.editModalShow,
-    selectEditId:(state)=>state.editCategoryId,
-    selectDeletingCategory:(state)=>state.deletingCategory,
-    selectCreatingCategory:(state)=>state.creatingCategory,
-    selectUpdatingCategory:(state)=>state.updatingCategory,
+    selectAddShow: (state) => state.addModalShow,
+    selectEditShow: (state) => state.editModalShow,
+    selectEditId: (state) => state.editCategoryId,
+    selectDeletingCategory: (state) => state.deletingCategory,
+    selectCreatingCategory: (state) => state.creatingCategory,
+    selectUpdatingCategory: (state) => state.updatingCategory,
   }
 });
 
@@ -102,9 +102,9 @@ export const categoryReducer = categorySlice.reducer;
 
 export const {
   openAddModal,
-closeAddModal,
-openEditModal,
-closeEditModal
+  closeAddModal,
+  openEditModal,
+  closeEditModal
 } = categorySlice.actions;
 
 export const {

@@ -27,7 +27,7 @@ const FormCategory: React.FC<Props> = ({
 
   const [category, setCategory] = useState<ApiCategory>(initialState);
 
-  const changeDish = (
+  const changeCategories = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     setCategory((prev) => ({
@@ -54,7 +54,7 @@ const FormCategory: React.FC<Props> = ({
             name="title"
             required
             value={category.title}
-            onChange={changeDish}
+            onChange={changeCategories}
           />
         </Col>
       </Form.Group>
@@ -68,7 +68,7 @@ const FormCategory: React.FC<Props> = ({
             name="type"
             required
             value={category.type}
-            onChange={changeDish}
+            onChange={changeCategories}
           >
             <option value="">Change type</option>
             <option value="income" className="text-success">Income</option>

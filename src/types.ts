@@ -32,6 +32,7 @@ export interface AppTransaction{
 
 export interface TransactionMutation{
   category:string;
+  type:string;
   amount:string;
   createdAt:string;
 }
