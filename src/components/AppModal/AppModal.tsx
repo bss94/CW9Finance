@@ -4,34 +4,30 @@ import {Button, Modal} from 'react-bootstrap';
 interface Props extends React.PropsWithChildren {
   show: boolean;
   title?:string;
-  completeBtnName:string;
-  onClose: React.MouseEventHandler;
-  onComplete: React.MouseEventHandler;
+  onClose: VoidFunction;
 }
 
 const AppModal: React.FC<Props> = ({
   show,
   title,
-  completeBtnName,
   onClose,
-  onComplete,
   children
 }) => {
   return (
     <Modal
       show={show}
+      onHide={onClose}
       size="lg"
       centered
     >
-      <Modal.Header closeButton>
-        {title}
+      <Modal.Header closeButton >
+      <h3>{title}</h3>
       </Modal.Header>
       <Modal.Body>
         {children}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>Cancel</Button>
-        <Button variant="outline-success" onClick={onComplete}>{completeBtnName}</Button>
       </Modal.Footer>
     </Modal>
   );

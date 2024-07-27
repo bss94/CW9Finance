@@ -1,14 +1,15 @@
 import CategoryItem from './CategoryItem';
+import {useAppSelector} from '../../../app/hooks';
+import {selectCategory} from '../../../store/categorySlice';
 
 const CategoryList = () => {
+  const category = useAppSelector(selectCategory);
   return (
-    <div>
-      CategoryList
-      ----------------
-      <CategoryItem/>
-      <CategoryItem/>
-      <CategoryItem/>
-    </div>
+    <>
+      {category.map(item=>{
+        return <CategoryItem key={item.id} category={item}/>
+      })}
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
 
 export interface Category{
   id:string;
-  name:string;
-  type:'income'|'expense';
+  title:string;
+  type:string;
 }
 
 export type ApiCategory = Omit<Category, 'id'>;
