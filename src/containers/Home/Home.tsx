@@ -4,12 +4,16 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import FormTransaction from '../../components/Transacrions/FormTransaction/FormTransaction';
 import {
   closeAddTransaction,
+  closeEditTransaction,
   openAddTransaction,
   selectCreatingTransaction,
+  selectEditTransactionId,
   selectFetchingTransactions,
-  selectShowAddTransaction
+  selectShowAddTransaction,
+  selectShowEditTransaction,
+  selectUpdatingTransaction
 } from '../../store/transactionSlice';
-import {createTransaction, fetchTransactions} from '../../store/transactionsThunk';
+import {createTransaction, fetchTransactions, updateTransaction} from '../../store/transactionsThunk';
 import {Button} from 'react-bootstrap';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import AppModal from '../../components/AppModal/AppModal';
@@ -23,9 +27,9 @@ const Home = () => {
   const creating = useAppSelector(selectCreatingTransaction);
   const loading = useAppSelector(selectFetchingTransactions);
   const showAddForm = useAppSelector(selectShowAddTransaction);
-  // const showEditForm = useAppSelector(selectShowEditTransaction);
-  // const updating = useAppSelector(selectUpdatingTransaction);
-  // const editId = useAppSelector(selectEditTransactionId);
+  const showEditForm = useAppSelector(selectShowEditTransaction);
+  const updating = useAppSelector(selectUpdatingTransaction);
+  const editId = useAppSelector(selectEditTransactionId);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -38,9 +42,9 @@ const Home = () => {
   const hideAddModal = () => {
     dispatch(closeAddTransaction());
   };
-  // const hideEditModal = () => {
-  //   dispatch(closeEditTransaction());
-  // };
+  const hideEditModal = () => {
+    dispatch(closeEditTransaction());
+  };
 
   const onCreateSubmit = async (transaction: ApiTransaction) => {
     try {
@@ -53,6 +57,21 @@ const Home = () => {
       await dispatch(fetchTransactions());
     }
   };
+
+  const onUpdateSubmit = async (apiTransaction: ApiTransaction) => {
+    if (editId) {
+      try {
+        await dispatch(updateTransaction({editId, apiTransaction}));
+        toast.success('Transaction Updated');
+        dispatch(closeEditTransaction());
+      } catch (error) {
+        toast.error('Could not Update transaction!');
+      } finally {
+        await dispatch(fetchTransactions());
+      }
+    }
+  };
+
 
   return (
     <div>
@@ -75,6 +94,16 @@ const Home = () => {
         }}
       >
         <FormTransaction sending={creating} onSubmit={onCreateSubmit}/>
+      </AppModal>
+
+      <AppModal
+        show={showEditForm}
+        title={'Edit Transaction'}
+        onClose={() => {
+          hideEditModal();
+        }}
+      >
+        <FormTransaction sending={updating} onSubmit={onUpdateSubmit}/>
       </AppModal>
 
 

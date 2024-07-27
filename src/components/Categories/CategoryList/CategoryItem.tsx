@@ -2,7 +2,7 @@ import {Category} from '../../../types';
 import React from 'react';
 import {Button, Card, Col, Row} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
-import {closeAddModal, openEditModal, selectDeletingCategory} from '../../../store/categorySlice';
+import {openEditModal, selectDeletingCategory} from '../../../store/categorySlice';
 import {deleteCategory, fetchCategories} from '../../../store/categoryThunk';
 import SpinnerBtn from '../../SpinnerBtn/SpinnerBtn';
 import {toast} from 'react-toastify';
@@ -19,7 +19,6 @@ const CategoryItem: React.FC<Props> = ({category}) => {
     try {
       await dispatch(deleteCategory(id));
       toast.success('category deleted');
-      dispatch(closeAddModal());
     } catch (error) {
       toast.error('Could not delete category!');
     } finally {

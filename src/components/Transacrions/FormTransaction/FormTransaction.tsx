@@ -4,6 +4,7 @@ import {selectCategory} from '../../../store/categorySlice';
 import {ApiTransaction, TransactionMutation} from '../../../types';
 import {Col, Form} from 'react-bootstrap';
 import SpinnerBtn from '../../SpinnerBtn/SpinnerBtn';
+import {selectEditTransactionId, selectTransactions} from '../../../store/transactionSlice';
 
 interface Props {
   onSubmit: (transaction: ApiTransaction) => void;
@@ -15,18 +16,31 @@ const FormTransaction: React.FC<Props> = ({
   sending
 }) => {
   const categories = useAppSelector(selectCategory);
-  // const editId = useAppSelector(selectEditId);
-  // const existing = categories.find((category) => category.id === editId);
-  // const initialState: ApiCategory = existing
-  //   ? {title: existing.title, type: existing.type}
-  //   : emptyState;
+  const transactions = useAppSelector(selectTransactions);
+  const editId = useAppSelector(selectEditTransactionId);
 
-  const initialState: TransactionMutation = {
+
+  let initialState: TransactionMutation = {
     category: '',
     type: '',
     amount: '',
     createdAt: ''
   };
+  if (editId) {
+    const existingTransaction = transactions.find((transaction) => transaction.id === editId);
+    if (existingTransaction) {
+      const existingCategory = categories.find((category) => category.id === existingTransaction.category);
+      if (existingCategory) {
+        initialState = {
+          category: existingTransaction.category,
+          type: existingCategory.type,
+          amount: String(existingTransaction.amount),
+          createdAt: existingTransaction.createdAt,
+        };
+      }
+    }
+  }
+
 
   const [transactionMutation, setTransactionMutation] = useState<TransactionMutation>(initialState);
 
@@ -42,9 +56,11 @@ const FormTransaction: React.FC<Props> = ({
   const onFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     onSubmit({
-      category:transactionMutation.category,
+      category: transactionMutation.category,
       amount: parseFloat(transactionMutation.amount),
-      createdAt: new Date().toISOString(),
+      createdAt: transactionMutation.createdAt === ''
+        ? new Date().toISOString()
+        : transactionMutation.createdAt,
     });
   };
   return (
